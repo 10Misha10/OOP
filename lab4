@@ -1,0 +1,94 @@
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+#include <ctime>
+using namespace std;
+
+double input(const char* msg) {
+	double toReturn;
+	cout << msg;
+	while (!(cin >> toReturn) || cin.get() != '\n') {
+		cin.clear();
+		while (cin.get() != '\n');
+		cout << "\nНеправильный ввод!\n Попробуйте еще раз: ";
+	}
+	return toReturn;
+}
+
+class Arena
+{
+	int n, m;
+	int** mass;
+public:
+	//int n, m;
+	//int** mass;
+	Arena(int n, int m);
+	~Arena();
+	friend void View(Arena a, int, int);
+	friend void set(Arena a, int, int);
+	friend void run(Arena a, int, int);
+};
+
+Arena::Arena(int n, int m)
+{
+	this->n = n;
+	this->m = m;
+	mass = new int*[n];
+	for (int i = 0; i < n; i++) {
+		mass[i] = new int[m];
+	}
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			mass[i][j] = rand() % 1000;
+		}
+	}
+}
+
+Arena::~Arena()
+{
+	for (int i = 0; i < n; i++) {
+		free(mass[i]);
+	}
+	free(mass);
+}
+void View(Arena a, int n, int m) {
+	for (int i = 0; i < n; i++) {
+		cout << endl;
+		for (int j = 0; j < m; j++) {
+			cout << " " << a.mass[i][j];
+		}
+	}
+}
+void set(Arena a, int n, int m) {
+	cout << "New values:" << endl;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			a.mass[i][j] = rand() % 1000;
+		}
+	}
+}
+void run(Arena a, int n, int m) {
+	int my = 0, enemy = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if(j > i) { my++; }
+			if (i > j) { enemy++; }
+		}
+	}
+	cout << "Amount of my soldier: " << my << endl;
+	cout << "Amount of enemy soldier: " << enemy << endl;
+}
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	srand((UINT)time(NULL));
+
+	int n = 3, m = 4 ;
+	Arena a(n, m);
+	View(a, n, m);
+	cout << endl;
+	set(a, n, m);
+	run(a, n, m);
+
+    return 0;
+}
