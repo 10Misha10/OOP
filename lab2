@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+class Player //Создание класса Player
+{
+public:                                            // cписок полей и методов, доступных другим функциям и объектам программы
+	int* hp, * magic_power, * stamina; //объявление переменных
+	double* magic_damage, * physical_damage; //объявление переменных
+
+	void view(const char* msg) { //создание метода вывода
+		cout << msg << endl;
+		cout << "\tplayer hp: " << *hp << endl; //вывод информации
+		cout << "\tplayer magic_power: " << *magic_power << endl; //вывод информации
+		cout << "\tplayer stamina: " << *stamina << endl; //вывод информации
+	}
+
+	void Level(int hp, int magic_power, int stamina); //создание прототипа метода Level
+	void Damage(); //создание прототипа метода Damage
+	Player();//стандартный конструктор
+	Player(int hp_, int magic_power_, int stamina_, double magic_damage_, double physical_damage_);//конструктор с параметрами
+	void Set(int hp_, int magic_power_, int stamina_, double magic_damage_, double physical_damage_);//метод Set
+	~Player();//деструктор
+};
+Player::Player() {//описание конструктора вне класса
+	hp = new int(1);//динамическое выделение памяти для переменных
+	magic_power = new int(2);
+	stamina = new int(3);
+	magic_damage = new double(4);
+	physical_damage = new double(5);
+}
+Player::Player(int hp_, int magic_power_, int stamina_, double magic_damage_, double physical_damage_) {//описание конструктора вне класса
+	hp = new int(hp_);//динамическое выделение памяти для переменных
+	magic_power = new int(magic_power_);
+	stamina = new int(stamina_);
+	magic_damage = new double(magic_damage_);
+	physical_damage = new double(physical_damage_);
+}
+Player::~Player() {//описание деструктора
+	cout << "\nThe object at the " << hp << " address has been deleted! " << stamina << endl;
+	delete(hp, magic_power, stamina, magic_damage, physical_damage);//очистка памяти
+}
+void Player::Damage() //объявление метода Damage вне класса
+{
+	cout << "\tMagic damage: " << (*magic_damage * *magic_power) - *stamina << endl; //вывод magic_damage
+	cout << "\tPhysical damage: " << (*physical_damage * *stamina + *hp) - *magic_power << endl; //вывод physical_damage
+}
+void Player::Set(int hp_, int magic_power_, int stamina_, double magic_damage_, double physical_damage_) {//описание метода
+	*hp = hp_;//присвоение полям класса новых значений
+	*magic_power = magic_power_;
+	*stamina = stamina_;
+	*magic_damage = magic_damage_;
+	*physical_damage = physical_damage_;
+}
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	Player one;//создание объекта one класса Player. Вызывается стандартный конструктор.
+	Player p_one(12, 13, 14, 15, 16);//создание объекта p_one класса Player. Вызывается конструктор с параметрамми.
+	one.view("Player one:");
+	one.Damage();
+	cout << endl;
+	p_one.view("Player p_one:");
+	p_one.Damage();
+
+
+	cout << endl;
+	one.Set(123, 124, 125, 126, 127);//вызов метда Set, который изменяет устанавливает новые значения для полей объекта one класса.
+	one.view("Player one:");
+	one.Damage();
+	cout << endl;
+	p_one.Set(100, 200, 300, 400, 500);//вызов метда Set, который изменяет устанавливает новые значения для полей объекта p_one класса.
+	p_one.view("Player p_one:");
+	p_one.Damage();
+	return 0; //завершение программы
+}
