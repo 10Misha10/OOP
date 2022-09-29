@@ -1,0 +1,64 @@
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+#include <ctime>
+using namespace std;
+
+int input(const char* msg) {
+	int toReturn = 0;
+	cout << msg << " ";
+	while (!(cin >> toReturn) || cin.get() != '\n') {
+		cin.clear();
+		while (cin.get() != '\n');
+		cout << "\nНеправильный ввод!\n Попробуйте еще раз: ";
+	}
+	return toReturn;
+}
+class Inventory
+{
+	int size, ID, weight;
+	string name;
+	Inventory* mass;
+public:
+	Inventory(int size);
+	~Inventory();
+	void run(int size);
+	void show(int size);
+};
+
+Inventory::Inventory(int size)
+{
+	mass = (Inventory*)calloc(size, sizeof(Inventory));
+	for (int i = 0; i < size; i++) {
+		mass[i].weight = rand() % 100 - 0;
+		cout << "Player " << i + 1 << ":" << endl;
+		cout << "\tweight: " <<mass[i].weight << endl;
+		mass[i].ID = input("\tID: ");
+		cout << "\tname: "; cin >> mass[i].name;
+	}
+}
+
+
+Inventory::~Inventory()
+{
+	free(mass);
+}
+void Inventory::run(int size) {
+	for (int i = 0; i < size; i++) {
+		if (mass[i].weight > 30 && mass[i].weight < 90) {
+			cout << "\tID: " << mass[i].ID << endl;
+			cout << "\tname: " << mass[i].name << endl;
+			cout << "\tweight: " << mass[i].weight << "\n\n";
+		}
+	}
+}
+int main()
+{
+    setlocale(LC_ALL, "ru");
+	srand((UINT)time(NULL));
+	int size = 4;
+	Inventory a(size);
+	cout << "Player with 30 < weight < 90 :" << endl;
+	a.run(size);
+	return 0;
+}
