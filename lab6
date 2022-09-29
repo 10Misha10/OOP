@@ -1,0 +1,81 @@
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+#include <ctime>
+#include <string.h>
+using namespace std;
+
+class Monsters
+{
+	int hp, damage, armour;
+public:
+	Monsters(int hp_, int damage_, int armour_)
+		: hp(hp_), damage(damage_), armour(armour_)
+	{}
+	int get_hp() { return hp; }
+	int get_damage() { return damage; }
+	int get_armour() { return armour; }
+	virtual void print_info() { cout << "???" << endl; }
+	virtual void scream() = 0;
+
+};
+class Drakula: public Monsters
+{
+public:
+	Drakula(int hp, int damage, int armour)
+		: Monsters(hp, damage, armour)
+	{}
+	virtual void print_info() { 
+		cout << "Drakula\n\thp: " << this->get_hp() * 3 << endl; 
+		cout << "\tdamage: " << this->get_damage() * 3 << endl;
+		cout << "\tarmour: " << this->get_armour() * 3 << endl;
+	}
+	virtual void scream() { cout << "\tI'm Drakula!" << endl; };
+
+};
+class Shark : public Monsters
+{
+public:
+	Shark(int hp, int damage, int armour)
+		: Monsters(hp, damage, armour)
+	{}
+	virtual void print_info() {
+		cout << "Shark\n\thp: " << this->get_hp() * 5 << endl;
+		cout << "\tdamage: " << this->get_damage() * 5 << endl;
+		cout << "\tarmour: " << this->get_armour() * 5 << endl;
+	}
+	virtual void scream() { cout << "\tI'm Shark!" << endl; }
+
+};
+class Sceleton : public Monsters
+{
+public:
+	Sceleton(int hp, int damage, int armour)
+		: Monsters(hp, damage, armour)
+	{}
+	virtual void print_info() {
+		cout << "Sceleton\n\thp: " << this->get_hp() * 7 << endl;
+		cout << "\tdamage: " << this->get_damage() * 7 << endl;
+		cout << "\tarmour: " << this->get_armour() * 7<< endl;
+	}
+	virtual void scream() { cout << "\tI'm Sceleton!" << endl; }
+
+};
+
+
+
+int main()
+{
+	Drakula drakula(100, 200, 300);
+	drakula.print_info();
+	drakula.scream();
+
+	Shark shark(100, 200, 300);
+	shark.print_info();
+	shark.scream();
+
+	Sceleton sceleton(100, 200, 300);
+	sceleton.print_info();
+	sceleton.scream();
+	return 0;
+}
