@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+int input_without_0(const char* msg) {
+	int toReturn = 0;
+	cout << msg << " ";
+	while (toReturn < 1) {
+		while (!(cin >> toReturn) || cin.get() != '\n') {
+			cin.clear();
+			while (cin.get() != '\n');
+			cout << "\nBad input!\n Try again: ";
+		}
+		if (toReturn <= 0) {
+			cout << "\nValue should be more than zero!\nTry again: ";
+		}
+	}
+	return toReturn;
+}
+class Player //Создание класса Player
+{
+	int hp, magic_power, stamina; //объявление переменных
+	double magic_damage, physical_damage; //объявление переменных
+public:                                            // cписок полей и методов, доступных другим функциям и объектам программы
+	void Input(int &i, int &j, int &k, int &f, int &e) { //создание метода ввода
+		hp = input_without_0("input player hp:"); //ввод hp
+		i = hp;
+		magic_power = input_without_0("input player magic_power:"); //ввод magic_power
+		j = magic_power;
+		stamina = input_without_0("input player stamina:"); //ввод stamina
+		k = stamina;
+		magic_damage = input_without_0("input player magic_damage:"); //ввод magic_damage
+		f = magic_damage;
+		physical_damage = input_without_0("input player physical_damage:"); //ввод physical_damage
+		e = physical_damage;
+	}
+	void view(const char* msg) { //создание метода вывода
+		cout << msg << endl;
+		cout << "\thp: " << hp << endl; //вывод информации
+		cout << "\tmagic_power: " << magic_power << endl; //вывод информации
+		cout << "\tstamina: " << stamina << endl; //вывод информации
+	}
+	void Level(int hp, int magic_power, int stamina); //создание прототипа метода Level
+	void Damage(int hp, int magic_power, int stamina, double magic_damage, double physical_damage); //создание прототипа метода Damage
+};
+
+void Player::Level(int hp, int magic_power, int stamina) //объявление метода Player вне класса
+{
+	if (hp == 0 || magic_power == 0 || stamina == 0) { //проверка на деление на ноль
+		if (hp == 0) {
+			cout << "\tError: hp = 0!" << endl; //вывод сообщения об ошибке если hp == 0
+		}
+		if (magic_power == 0) {
+			cout << "\tError: magic_power = 0!" << endl; //вывод сообщения об ошибке если magic_power == 0
+		}
+		if (stamina == 0) {
+			cout << "\tError: stamina = 0!" << endl; //вывод сообщения об ошибке если stamina == 0
+		}
+	}
+	else {
+		cout << "\tlevel: " << (hp * magic_power) / (double)stamina + (hp * stamina) / (double)magic_power - (stamina * magic_power) / (double)hp << endl; //вывод результата метода
+	}
+}
+void Player::Damage(int hp, int magic_power, int stamina, double magic_damage, double physical_damage) //объявление метода Damage вне класса
+{
+	cout << "\tMagic damage: " << (magic_damage * magic_power) - stamina << endl; //вывод magic_damage
+	cout << "\tPhysical damage: " << (physical_damage * stamina + hp) - magic_power << endl; //вывод physical_damage
+}
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	int hp = 1, magic_power = 1, stamina = 1, magic_damage = 1, physical_damage = 1;
+	Player one, *p_one; //создание объект one и указатель *p_one класса Player
+	one.Input(hp, magic_power, stamina, magic_damage, physical_damage); //вызов метода Input через объект one
+	one.view("Player one:"); //вызов метода view через объект one
+	one.Level(hp, magic_power, stamina); //вызов метода Level через объект one
+	p_one = &one; //присвоение указателю p_one адрес объекта one
+	p_one->Damage(hp, magic_power, stamina, magic_damage, physical_damage); //вызов метода Damage через указатель p_one
+	return 0; //завершение программы
+}
