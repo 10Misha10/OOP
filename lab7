@@ -1,0 +1,116 @@
+#include <iostream>
+
+using namespace std;
+
+template <class T>
+class Array
+{
+	T arr[10];
+public:
+	T* getArray() 
+	{
+		return arr;
+	}
+	void  View() 
+	{
+		for(int i = 0; i < 10; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << endl;
+	}
+	Array(const T value)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			arr[i] = value*i;
+		}
+	}
+	void run() 
+	{
+		int sum = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			sum += arr[i];
+		}
+		int res = sum / 10;
+		cout << "average value: " << res << endl;
+	}
+};
+template <>
+class Array <char>
+{
+	char arr[10];
+public:
+	char* getArray()
+	{
+		return arr;
+	}
+	void View()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << endl;
+	}
+	Array(const char * value)
+	{
+		strcpy_s(arr, 10, value);
+	}
+	void run()
+	{
+		cout << "first and last: " << this->arr[0] << "\t" << this->arr[8] << endl;
+	}
+};
+template <>
+class Array<double>
+{
+	double arr[10];
+public:
+	double* getArray()
+	{
+		return arr;
+	}
+	void View()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << endl;
+	}
+	Array(double value)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			arr[i] = value*0.5*i;
+		}
+	}
+	void run()
+	{
+		double sum = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			sum += arr[i];
+		}
+		cout << "Sum: " << sum << endl;
+	}
+};
+
+int main()
+{
+	Array<int> int_arr(11);
+	int_arr.View();
+	int_arr.run();
+	cout << endl;
+
+	Array<double> double_arr(11);
+	double_arr.View();
+	double_arr.run();
+	cout << endl;
+
+	Array<char> char_arr("fffffffff");
+	char_arr.View();
+	char_arr.run();
+}
