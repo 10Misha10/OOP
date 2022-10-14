@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+int input(const char* msg) {
+	int toReturn = 0;
+	cout << msg << " ";
+	while (!(cin >> toReturn) || cin.get() != '\n') {
+		cin.clear();
+		while (cin.get() != '\n');
+		cout << "\nНеправильный ввод!\n Попробуйте еще раз: ";
+	}
+	return toReturn;
+}
+
+class Game
+{
+	int number;
+public:
+	Game(int value) 
+	{
+		this->number = value;
+	};
+	void Check(int value) 
+	{
+		if (value != number)
+		{
+			throw "Попробуй еще раз: ";
+			//throw exception("value < 0");
+		}
+	};
+
+private:
+
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Rus");
+
+	int value_parent, value_child;
+	value_parent = input("Введите число: ");
+	while(value_parent < 0 || value_parent > 100)
+	{
+		value_parent = input("Ведите допустимое значение: ");
+	}
+	Game g(value_parent);
+
+	value_child = input("Очередь ребенка: ");
+	try//пробуем что-то выполнить
+	{
+		g.Check(value_child);
+		cout << "Ты молодец!!!" << endl;
+	}
+	catch (const char*/*exception &value*/ value)//если что-то не так, то идет сюда. В скобках инфа, переданная от try
+	{
+		while (value_parent != value_child)
+		{
+			value_child = input(value);
+		}
+		cout << "\nТы молодец!!!" << endl;
+		//cout << value/*value.what()*/ << endl;
+
+	}
+    return 0;
+}
