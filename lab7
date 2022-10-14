@@ -5,23 +5,23 @@ using namespace std;
 template <class T>
 class Array
 {
-	T arr[10];
+	T *arr;
+	int size;
 public:
-	T* getArray() 
-	{
-		return arr;
-	}
+
 	void  View() 
 	{
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < this->size; i++)
 		{
 			cout << arr[i] << " ";
 		}
 		cout << endl;
 	}
-	Array(const T value)
+	Array(int value)
 	{
-		for (int i = 0; i < 10; i++)
+		this->size = value;
+		arr = new T[size];
+		for (int i = 0; i < this->size; i++)
 		{
 			arr[i] = value*i;
 		}
@@ -29,7 +29,7 @@ public:
 	void run() 
 	{
 		int sum = 0;
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < this->size; i++)
 		{
 			sum += arr[i];
 		}
@@ -40,38 +40,38 @@ public:
 template <>
 class Array <char>
 {
-	char arr[10];
+	char* arr;
+	int size;
 public:
-	char* getArray()
-	{
-		return arr;
-	}
 	void View()
 	{
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < this->size; i++)
 		{
 			cout << arr[i] << " ";
 		}
 		cout << endl;
 	}
-	Array(const char * value)
+	Array(string str)
 	{
-		strcpy_s(arr, 10, value);
+		this->size = str.size();
+		arr = new char[str.size()];
+		//strcpy_s(arr, 10, value);
+		for (int i = 0; i < this->size; i++)
+		{
+			arr[i] = str[i];
+		}
 	}
 	void run()
 	{
-		cout << "first and last: " << this->arr[0] << "\t" << this->arr[8] << endl;
+		cout << "first and last: " << this->arr[0] << "\t" << this->arr[this->size-1] << endl;
 	}
 };
 template <>
 class Array<double>
 {
-	double arr[10];
+	double *arr;
+	int size;
 public:
-	double* getArray()
-	{
-		return arr;
-	}
 	void View()
 	{
 		for (int i = 0; i < 10; i++)
@@ -82,15 +82,17 @@ public:
 	}
 	Array(double value)
 	{
-		for (int i = 0; i < 10; i++)
+		this->size = value;
+		arr = new double[this->size];
+		for (int i = 0; i < this->size; i++)
 		{
-			arr[i] = value*0.5*i;
+			arr[i] = value*1.5*i;
 		}
 	}
 	void run()
 	{
 		double sum = 0;
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < this->size; i++)
 		{
 			sum += arr[i];
 		}
@@ -100,7 +102,7 @@ public:
 
 int main()
 {
-	Array<int> int_arr(11);
+	Array<int> int_arr(10);
 	int_arr.View();
 	int_arr.run();
 	cout << endl;
@@ -110,7 +112,7 @@ int main()
 	double_arr.run();
 	cout << endl;
 
-	Array<char> char_arr("fffffffff");
+	Array<char> char_arr("ffffffff1");
 	char_arr.View();
 	char_arr.run();
 }
