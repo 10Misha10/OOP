@@ -25,7 +25,6 @@ public:
 		if (value != number)
 		{
 			throw "Попробуй еще раз: ";
-			//throw exception("value < 0");
 		}
 	};
 
@@ -51,14 +50,13 @@ int main()
 		g.Check(value_child);
 		cout << "Ты молодец!!!" << endl;
 	}
-	catch (const char*/*exception &value*/ value)//если что-то не так, то идет сюда. В скобках инфа, переданная от try
+	catch (const char* value)//если что-то не так, то идет сюда. В скобках инфа, переданная от try
 	{
 		while (value_parent != value_child)
 		{
 			value_child = input(value);
 		}
 		cout << "\nТы молодец!!!" << endl;
-		//cout << value/*value.what()*/ << endl;
 
 	}
     return 0;
