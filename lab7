@@ -8,7 +8,7 @@ class Array
 	T *arr;
 	int size;
 public:
-
+	
 	void  View() 
 	{
 		for(int i = 0; i < this->size; i++)
@@ -17,24 +17,43 @@ public:
 		}
 		cout << endl;
 	}
-	Array(int value)
+	Array(T value)
 	{
 		this->size = value;
 		arr = new T[size];
 		for (int i = 0; i < this->size; i++)
 		{
-			arr[i] = value*i;
+			if (typeid(T) == typeid(int)) 
+			{
+				arr[i] = value * i;
+			}
+			if (typeid(T) == typeid(double))
+			{
+				arr[i] = value * 1.5 * i;
+			}
 		}
 	}
 	void run() 
 	{
-		int sum = 0;
-		for (int i = 0; i < this->size; i++)
+		if (typeid(T) == typeid(int))
 		{
-			sum += arr[i];
+			int sum = 0;
+			for (int i = 0; i < this->size; i++)
+			{
+				sum += arr[i];
+			}
+			int res = sum / this->size;
+			cout << "average value: " << res << endl;
 		}
-		int res = sum / 10;
-		cout << "average value: " << res << endl;
+		if (typeid(T) == typeid(double))
+		{
+			double sum = 0;
+			for (int i = 0; i < this->size; i++)
+			{
+				sum += arr[i];
+			}
+			cout << "Sum: " << sum << endl;
+		}
 	}
 };
 template <>
@@ -66,39 +85,7 @@ public:
 		cout << "first and last: " << this->arr[0] << "\t" << this->arr[this->size-1] << endl;
 	}
 };
-template <>
-class Array<double>
-{
-	double *arr;
-	int size;
-public:
-	void View()
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			cout << arr[i] << " ";
-		}
-		cout << endl;
-	}
-	Array(double value)
-	{
-		this->size = value;
-		arr = new double[this->size];
-		for (int i = 0; i < this->size; i++)
-		{
-			arr[i] = value*1.5*i;
-		}
-	}
-	void run()
-	{
-		double sum = 0;
-		for (int i = 0; i < this->size; i++)
-		{
-			sum += arr[i];
-		}
-		cout << "Sum: " << sum << endl;
-	}
-};
+
 
 int main()
 {
